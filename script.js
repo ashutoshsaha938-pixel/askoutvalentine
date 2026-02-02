@@ -9,6 +9,9 @@ const catImg = document.getElementById("letter-cat");
 const buttons = document.getElementById("letter-buttons");
 const finalText = document.getElementById("final-text");
 
+// 🎵 Add reference to your audio element
+const music = document.getElementById("bg-music");
+
 // Click Envelope
 
 envelope.addEventListener("click", () => {
@@ -18,6 +21,22 @@ envelope.addEventListener("click", () => {
     setTimeout( () => {
         document.querySelector(".letter-window").classList.add("open");
     },50);
+
+    // 🎵 Start music with fade-in
+    music.volume = 0; // start silent
+    music.play().catch(err => {
+        console.log("Autoplay blocked, user interaction needed.");
+    });
+
+    let fadeInterval = setInterval(() => {
+        if (music.volume < 1) {
+            music.volume = Math.min(music.volume + 0.05, 1); // increase gradually
+        } else {
+            clearInterval(fadeInterval); // stop once full volume
+        }
+    }, 200); // every 200ms
+
+
 });
 
 // Logic to move the NO btn
@@ -59,8 +78,10 @@ noBtn.addEventListener("mouseover", () => {
 
 // YES is clicked
 
+
+
 yesBtn.addEventListener("click", () => {
-    title.textContent = "Yippeeee!";
+    title.textContent = "YaYaYa heppy hepppy heppppy!";
 
     catImg.src = "cat_dance.gif";
 
